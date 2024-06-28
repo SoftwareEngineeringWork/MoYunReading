@@ -1,0 +1,112 @@
+<template>
+    <div style="width: 80%">
+        <div style="margin-bottom: 30px">新增用户</div>
+        <el-form :inline="true" :model="form" label-width="100px" :rules="rules" ref="ruleForm">
+            <el-form-item label="姓名" prop="name">
+                <el-input v-model="form.name" placeholder="请输入姓名"></el-input>
+            </el-form-item>
+            <el-form-item label="性别">
+                <el-select v-model="form.sex" placeholder="请选择性别">
+                    <el-option label="男" value="男"></el-option>
+                    <el-option label="女" value="女"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="年龄" prop="age">
+                <el-input v-model="form.age" placeholder="请输入年龄"></el-input>
+            </el-form-item>
+            <el-form-item label="联系方式" prop="phone">
+                <el-input v-model="form.phone" placeholder="请输入联系方式" style=""></el-input>
+            </el-form-item>
+            <el-form-item label="密码" prop="email">
+                <el-input v-model="form.email" placeholder="请输入密码" style=""></el-input>
+            </el-form-item>
+            <el-form-item label="地址">
+                <el-input v-model="form.address" placeholder="请输入住址"></el-input>
+            </el-form-item>
+        </el-form>
+        <div style="text-align: center; margin-top: 30px">
+            <el-button type="primary" @click="save" size="medium">提交</el-button>
+        </div>
+    </div>
+</template>
+
+<script>
+    import request from "@/utils/request";
+
+    export default {
+        name: "AddUser",
+        data() {
+
+            //自定义表单校验
+            const checkAge = (rule, value, callback) => {
+                if (!value) {
+                    return callback(new Error('年龄不能为空'));
+                }
+                if (!/^[0-9]+$/.test(value)) {
+                    callback(new Error('请输入数字值'));
+                }
+                if (parseInt(value) > 120 || parseInt(value) <= 0) {
+                    callback(new Error('请输入合理的年龄'));
+                }
+                callback();
+            };
+            const checkPhone = (rule, value, callback) => {
+                if (!/^[1][3,4,5,6,7,8,9][0-9]{9}$/.test(value)) {
+                    callback(new Error('请输入合法的手机号'));
+                }
+                callback();
+            };
+            const checkEmail = (rule, value, callback) => {
+                const reg = /^([a-zA-Z0-9]+[-_\.]?)+@[a-zA-Z0-9]+\.[a-z]+$/;
+                if (value == '' || value == undefined || value == null) {
+                    callback();
+                } else {
+                    if (!reg.test(value)) {
+                        callback(new Error('请输入正确的邮箱地址'));
+                    } else {
+                        callback();
+                    }
+                }
+            };
+
+            return {
+                form: {},
+
+                //表单校验规则
+                rules: {
+                    name: [
+                        { required: true, message: '请输入姓名', trigger: 'blur'}
+                    ],
+                    age: [
+                        { validator: checkAge, trigger: 'blur' }
+                    ],
+                    phone: [
+                        { validator: checkPhone, trigger: 'blur' }
+                    ],
+                    email: [
+                        { validator: checkEmail, trigger: 'blur' }
+                    ]
+                }
+
+            }
+        },
+        methods: {
+            save() {
+                this.$refs['ruleForm'].validate((valid) => {
+                    if (valid) {
+                        request.post("/user/add",this.form).then(res => {
+                            if (res.code === '200'){
+                                this.$notify.success("新增成功");
+                                //this.form = {};       这两种方式都是用来清空form
+                                this.$refs['ruleForm'].resetFields();
+                            } else {
+                                this.$notify.error(res.msg);
+                            }
+                        })
+                    }
+                })
+            }
+        }
+    }
+</script>
+

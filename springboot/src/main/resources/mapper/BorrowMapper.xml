@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zwj.mapper.BorrowMapper">
+
+    <insert id="save" parameterType="borrow">
+        insert into borrow ( book_name, book_num, user_id, user_name, user_phone, score, status, days, return_time) VALUES (#{bookName}, #{bookNum}, #{userId}, #{userName}, #{userPhone}, #{score}, #{status}, #{days}, #{returnTime})
+    </insert>
+
+    <update id="update" parameterType="borrow">
+        update borrow set status = #{status}, days = #{days}, return_time = #{returnTime} where id = #{id}
+    </update>
+
+    <update id="deleteReturn">
+        update borrow set status = #{status}, return_time = #{returnTime} where id = #{id}
+    </update>
+
+    <delete id="delete">
+        delete from borrow where id = #{id}
+    </delete>
+
+    <select id="list" resultType="borrow">
+        select * from borrow
+    </select>
+
+    <select id="listByCondition" resultType="borrow" parameterType="com.zwj.controller.request.BorrowPageRequest">
+        select * from borrow
+        <where>
+            <if test="userName != null and userName != ''">
+                user_name like concat('%',#{ userName },'%')
+            </if>
+            <if test="bookName != null and bookName != ''">
+                and book_name like concat('%',#{ bookName },'%')
+            </if>
+            <if test="userPhone != null and userPhone != ''">
+                and user_phone = #{userPhone}
+            </if>
+            and status = '已借出'
+        </where>
+        order by id
+    </select>
+
+    <select id="listByCondition2" resultType="borrow" parameterType="com.zwj.controller.request.BorrowPageRequest">
+        select * from borrow
+        <where>
+            <if test="userName != null and userName != ''">
+                user_name like concat('%',#{ userName },'%')
+            </if>
+            <if test="bookName != null and bookName != ''">
+                and book_name like concat('%',#{ bookName },'%')
+            </if>
+            <if test="userPhone != null and userPhone != ''">
+                and user_phone = #{userPhone}
+            </if>
+            and status = '已归还'
+        </where>
+        order by id
+    </select>
+
+    <select id="getBorrowById" resultType="com.zwj.pojo.Borrow">
+        select * from borrow where id = #{id}
+    </select>
+
+</mapper>

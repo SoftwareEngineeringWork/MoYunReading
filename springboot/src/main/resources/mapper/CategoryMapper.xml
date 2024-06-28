@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zwj.mapper.CategoryMapper">
+
+    <resultMap id="categoryMap" type="category">
+        <!--column是数据库，property是java实体类-->
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="remark" property="remark"/>
+        <result column="pid" property="pid"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <collection property="children" ofType="category" column="id" select="selectByPid">
+
+        </collection>
+    </resultMap>
+
+    <select id="selectByPid" resultType="category">
+        select * from category where pid = #{id}
+    </select>
+
+    <insert id="save" parameterType="category">
+        insert into category (name, remark) VALUES (#{name}, #{remark})
+    </insert>
+
+    <insert id="save2" parameterType="category">
+        insert into category (name, remark ,pid) VALUES (#{name}, #{remark}, #{pid})
+    </insert>
+
+    <update id="update" parameterType="category">
+        update category set name = #{name}, remark = #{remark}, update_time = #{updateTime} where id = #{id}
+    </update>
+
+    <delete id="delete">
+        delete from category where id = #{id}
+    </delete>
+
+    <select id="list" resultType="category">
+        select * from category
+    </select>
+
+    <select id="listByCondition" resultMap="categoryMap">
+        select distinct c1.* from category c1
+        left join category c2
+        on c1.id = c2.pid
+        <where>
+            c1.pid is null
+            <if test="name != null and name != ''">
+                and c1.name like concat('%',#{ name },'%') or c2.name like concat('%',#{ name },'%')
+            </if>
+        </where>
+        order by id
+    </select>
+
+    <select id="getCategoryByName" resultType="category">
+        select * from category where name = #{name}
+    </select>
+
+</mapper>

@@ -1,0 +1,12 @@
+package com.zwj.controller.request;
+
+import lombok.Data;
+
+@Data
+public class BorrowPageRequest extends BaseRequest{
+
+    private String userName;
+    private String bookName;
+    private String userPhone;
+
+}
