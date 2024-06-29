@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="localhost3306" uuid="528c3a01-50d3-4177-92da-07f320c08cc0">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <configured-by-url>true</configured-by-url>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/library-management?serverTimeZone=Asia/Shanghai&amp;useUnicode=true&amp;characterEncoding=utf-8</jdbc-url>
+      <driver-properties>
+        <property name="serverTimezone" value="Asia/Shanghai" />
+      </driver-properties>
+    </data-source>
+  </component>
+</project>

@@ -1,0 +1,63 @@
+GET http://localhost:9090/api/review/all
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-06-08T220950.200.json
+
+###
+
+GET http://localhost:9090/api/user/list
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-06-08T220933.200.json
+
+###
+
+GET http://localhost:9090/user/list
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-06-08T220911.404.json
+
+###
+
+GET http://localhost:9090/book/1
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-06-08T220857.404.json
+
+###
+
+GET http://localhost:9090/user/list
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-06-08T220227.404.json
+
+###
+
+GET http://localhost:9090/user/list
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-06-08T220211.404.json
+
+###
+
+GET http://localhost:9090/review/all
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-06-08T220154.404.json
+
+###
+
