@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zwj.mapper.BookMapper">
+
+    <insert id="save" parameterType="Book">
+        insert into Book ( name, description, category, author, publisher, nums, publish_date, book_num, score, cover) VALUES (#{name}, #{description}, #{category}, #{author}, #{publisher}, #{nums}, #{publishDate}, #{bookNum}, #{score}, #{cover})
+    </insert>
+
+    <update id="update" parameterType="Book">
+        update Book set name = #{name}, description = #{description}, category = #{category}, publish_date = #{publishDate}, book_num = #{bookNum}, cover = #{cover}, score = #{score}, update_time = #{updateTime} where id = #{id}
+    </update>
+
+    <update id="updateNum">
+        update book set nums = #{nums} where id = #{id}
+    </update>
+
+    <delete id="delete">
+        delete from Book where id = #{id}
+    </delete>
+
+    <select id="list" resultType="book">
+        select * from book
+    </select>
+
+    <select id="listByCondition" resultType="book">
+        select * from book
+        <where>
+            <if test="name != null and name != ''">
+                name like concat('%',#{ name },'%')
+            </if>
+            <if test="author != null and author != ''">
+                and author like concat('%',#{ author },'%')
+            </if>
+            <if test="bookNum != null and bookNum != ''">
+                and bookNum = #{bookNum}
+            </if>
+        </where>
+        order by id
+    </select>
+
+    <select id="getBookByBookNum" resultType="com.zwj.pojo.Book">
+        select  * from book where book_num = #{bookNum}
+    </select>
+
+    <select id="findBookById" resultType="com.zwj.pojo.Book">
+        select * from book where id = #{id}
+    </select>
+
+</mapper>
